@@ -16,9 +16,13 @@ function spawn(genF) {
 }
 ```
 
+```javascript
+123
+```
+
 - new原理实现
 
-  ```
+  ```javascript
   function myNew(fn, ...rest) {
     const obj = {};
     obj.setPrototypeOf(fn.prototype);
@@ -27,7 +31,7 @@ function spawn(genF) {
   }
   ```
 
-  ```
+  ```javascript
   function myNew(fn, ...rest) {
     const obj = Object.create(fn.prototype)
     const fnObj = fn.apply(obj, rest);
@@ -35,7 +39,7 @@ function spawn(genF) {
   }
   ```
 
-  ```
+  ```javascript
   function myNew(fn, ...rest) {
     const obj = {};
     obj.__proto__ = fn.prototype;
