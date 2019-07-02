@@ -2,23 +2,52 @@
 
 - async&await
 
-
-```javascript
-function spawn(genF) {
-  const gen = genF();
-  return function next(v){
-    return new Promise((resolve, reject) => {
-      const next = gen.next(v);
-      if(next.done) return resolve(next.value);
-      return Promise.resolve(next.value).then(next).then(resolve, reject);
-    })
+  ```javascript
+  function spawn(genF) {
+    const gen = genF();
+    return function next(v){
+      return new Promise((resolve, reject) => {
+        const next = gen.next(v);
+        if(next.done) return resolve(next.value);
+        return Promise.resolve(next.value).then(next).then(resolve, reject);
+      })
+    }
   }
-}
-```
+  ```
 
-```javascript
-123
-```
+  ```javascript
+  function spawn(genF) {
+    return new Promise(function (resolve, reject) {
+      const gen = genF();
+  
+      function step(nextF) {
+        let next;
+        try {
+          next = nextF();
+        } catch (e) {
+          return reject(e);
+        }
+        if (next.done) {
+          return resolve(next.value);
+        }
+        Promise.resolve(next.value).then(function (v) {
+          step(function () {
+            return gen.next(v);
+          });
+        }, function (e) {
+          step(function () {
+            return gen.throw(e);
+          });
+        });
+      }
+      step(function () {
+        return gen.next(undefined);
+      });
+    });
+  }
+  ```
+
+  
 
 - new原理实现
 
@@ -47,3 +76,5 @@ function spawn(genF) {
     return typeof fnObj === 'object' ? fnObj : obj;
   }
   ```
+
+  
