@@ -85,3 +85,24 @@ function bitAdd(m, n) {
   return n;
 }
 ```
+
+- 动态规划 背包问题
+```javascript
+function dKnapsack(capacity, size, value){
+  if(size.length !== value.length) throw new Error('size length not equal value length');
+  let len = size.length;
+  const dp = Array(capacity + 1).fill(0).map(() => []);
+  for(let i = 0; i<= len; i++){
+    for(let w = 0; w <= capacity; w++){
+      if(i == 0 || w == 0) {
+        dp[i][w] = 0;
+      } else if (size[i - 1] <= w) {
+        dp[i][w] = Math.max(value[i - 1] + dp[i - 1][w - size[i - 1]], dp[i - 1][w]);
+      } else {
+        dp[i][w] = dp[i - 1][w];
+      }
+    }
+  }
+  return dp[len][capacity];
+}
+```
