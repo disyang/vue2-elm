@@ -1,108 +1,46 @@
-#### JavaScript相关原理实现
 
-- async&await
+# About
 
-```javascript
-function spawn(genF) {
-  const gen = genF();
-  return function next(v) {
-    return new Promise((resolve, reject) => {
-      const next = gen.next(v);
-      if (next.done) return resolve(next.value);
-      return Promise.resolve(next.value).then(next).then(resolve, reject);
-    })
-  }
-}
+此项目是 vue全家桶 + webpack + element-ui 构建的前端管理系统，
+
+
+# 说明
+
+>  如果对您对此项目有兴趣，可以点 "Star" 支持一下 谢谢！ ^_^
+
+>  或者您可以 "follow" 一下，我会不断开源更多的有趣的项目
+
+>  开发环境nodejs 10.16.2
+
+>  如有问题请直接在 Issues 中提，或者您发现问题并有非常好的解决方案，欢迎 PR 👍
+
+
+
+
+## 技术栈
+
+vue2 + vuex + vue-i18n + vue-router + webpack + ES6/7 + sass + element-ui
+
+
+## 项目运行
+
+
 ```
+git clone https://github.com/yht1989/vue2-elm  
 
-```javascript
-function spawn(genF) {
-  return new Promise(function (resolve, reject) {
-    const gen = genF();
+cd vue2-elm
 
-    function step(nextF) {
-      let next;
-      try {
-        next = nextF();
-      } catch (e) {
-        return reject(e);
-      }
-      if (next.done) {
-        return resolve(next.value);
-      }
-      Promise.resolve(next.value).then(function (v) {
-        step(function () {
-          return gen.next(v);
-        });
-      }, function (e) {
-        step(function () {
-          return gen.throw(e);
-        });
-      });
-    }
-    step(function () {
-      return gen.next(undefined);
-    });
-  });
-}
-```
+npm install 或 yarn(推荐)
 
-  
+npm run dev (本地环境)
 
-- new原理实现
+npm run build (打包编译)
 
-```javascript
-function myNew(fn, ...rest) {
-    const obj = {};
-    obj.setPrototypeOf(fn.prototype);
-    const fnObj = fn.apply(obj, rest);
-    return typeof fnObj === 'object' ? fnObj : obj;
-  }
-```
+npm run dll (抽离第三方模块, vue element-ui等包)
 
-```javascript
-function myNew(fn, ...rest) {
-  const obj = Object.create(fn.prototype)
-  const fnObj = fn.apply(obj, rest);
-  return typeof fnObj === 'object' ? fnObj : obj;
-}
-```
+npm run analyz (依赖关系图)
 
-```javascript
-function myNew(fn, ...rest) {
-  const obj = {};
-  obj.__proto__ = fn.prototype;
-  const fnObj = fn.apply(obj, rest);
-  return typeof fnObj === 'object' ? fnObj : obj;
-}
-```
-- 二进制实现加法运算
-```javascript
-function bitAdd(m, n) {
-  while (m) {
-    [m, n] = [(m & n) << 1, m ^ n];
-  }
-  return n;
-}
-```
 
-- 动态规划 背包问题
-```javascript
-function dKnapsack(capacity, size, value){
-  if(size.length !== value.length) throw new Error('size length not equal value length');
-  let len = size.length;
-  const dp = Array(capacity + 1).fill(0).map(() => []);
-  for(let i = 0; i<= len; i++){
-    for(let w = 0; w <= capacity; w++){
-      if(i == 0 || w == 0) {
-        dp[i][w] = 0;
-      } else if (size[i - 1] <= w) {
-        dp[i][w] = Math.max(value[i - 1] + dp[i - 1][w - size[i - 1]], dp[i - 1][w]);
-      } else {
-        dp[i][w] = dp[i - 1][w];
-      }
-    }
-  }
-  return dp[len][capacity];
-}
+访问: http://localhost:8080
+
 ```
