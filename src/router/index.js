@@ -10,9 +10,14 @@ export const router = new VueRouter({
       redirect: '/home'
     },
     {
+      path: '/login',
+      component: () => import('@components/home/Login.vue'),
+      name: '登录'
+    },
+    {
       path: '/home',
-      component: () => import('@components/Test.vue'),
-      name: '雅虎'
+      component: () => import('@components/home/Home.vue'),
+      name: '主页'
     },
     {
       path: '/data/:id',
