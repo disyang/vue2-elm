@@ -36,7 +36,7 @@ npm run dev (本地环境)
 
 npm run build (打包编译)
 
-npm run dll (抽离第三方模块, vue element-ui等包)
+npm run dll (抽离第三方模块, vue、element-ui、axios, vue-router, vuex, vue-i18n)
 
 npm run analyz (依赖关系图)
 
