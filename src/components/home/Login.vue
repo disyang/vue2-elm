@@ -1,16 +1,15 @@
-<template>
-    <section>
-        
-    </section>
-</template>
 
 <script>
 export default {
-    
-}
+  data: function() {
+    return {};
+  },
+  render(createElement) {
+      
+  }
+};
 </script>
 
 
-<style scoped>
-
+<style lang="scss" scoped>
 </style>
