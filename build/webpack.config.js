@@ -36,11 +36,18 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/]
-        }
+        loader: {
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/]
+          }
+        },
+        exclude: /node_modules/
+      },
+      {
+        test: /\.jsx?$/,
+        use: ['happypack/loader?id=happyBabel'], // 'eslint-loader'
+        exclude: /node_modules/
       },
       {
         test: /\.s[ac]ss$/i,
@@ -97,11 +104,6 @@ module.exports = {
             }
           }
         ]
-      },
-      {
-        test: /\.jsx?$/,
-        use: ['happypack/loader?id=happyBabel'], // 'eslint-loader'
-        exclude: /node_modules/
       }
     ]
   },
@@ -114,7 +116,7 @@ module.exports = {
       '@api': path.resolve(__dirname, '../src/api'),
       '@i18n': path.resolve(__dirname, '../src/i18n')
     },
-    extensions: ['*', '.ts','.js', '.json', '.vue']
+    extensions: ['*', '.ts', '.js', '.json', '.vue']
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -129,7 +131,7 @@ module.exports = {
     }),
     require('autoprefixer'),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
+      filename: '[name].[hash:8].css',
       chunkFilename: '[id].css'
     }),
     new HappyPack({
@@ -140,7 +142,8 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env']
           }
-        }
+        },
+        'eslint-loader'
       ],
       threadPool: HappyThreadPool
     }),
