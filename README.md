@@ -1,7 +1,7 @@
 
 # About
 
-此项目是 vue全家桶 + webpack + element-ui 构建的前端管理系统，
+此项目是 vue全家桶 + webpack + element-ui + TypeScript 构建的前端管理系统，
 
 
 # 说明
@@ -28,7 +28,7 @@ git clone https://github.com/yht1989/vue2-elm  
 
 cd vue2-elm
 
-npm install 或 yarn(推荐)
+npm install 
 
 npm run dev (本地环境)
 
