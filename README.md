@@ -1,7 +1,7 @@
 
 # About
 
-此项目是 vue全家桶 + webpack + element-ui + TypeScript 构建的前端管理系统，
+此项目是 Vue全家桶 + Webpack + Element-ui + TypeScript 构建的前端管理系统，
 
 
 # 说明
