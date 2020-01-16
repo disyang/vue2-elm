@@ -17,7 +17,7 @@
 
 ## 技术栈
 
-vue2 + vuex + vue-i18n + vue-router + webpack + ES6/7 + sass + element-ui
+vue2 + typescript + vuex + vue-i18n + vue-router + webpack + ES6/7 + sass + element-ui
 
 
 ## 项目运行
