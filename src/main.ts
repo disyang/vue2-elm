@@ -11,7 +11,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 
 Vue.use(ElementUI, {
-  i18n: (key: string, value: string) => i18n.t(key, value)
+  i18n: (key: any, value: any) => i18n.t(key, value)
 });
 
 new Vue({
