@@ -11,19 +11,14 @@ export const router = new VueRouter({
     },
     {
       path: '/login',
-      component: () => import('@components/home/Login.vue'),
+      component: () => import('@components/Hello.vue'),
       name: '登录'
     },
     {
       path: '/home',
-      component: () => import('@components/home/Home.vue'),
+      component: () => import('@components/HelloDecorator.vue'),
       name: '主页'
     },
-    {
-      path: '/data/:id',
-      component: () => import('@components/HelloWorld.vue'),
-      name: 'google'
-    }
   ]
 });
 

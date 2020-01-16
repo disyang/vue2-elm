@@ -1,5 +1,5 @@
 export default {
-    add(state, n) {
+    add(state: any, n: number) {
         state.count += n;
     }
 };

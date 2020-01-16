@@ -10,7 +10,7 @@ const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
   entry: {
-    app: ['@babel/polyfill', path.resolve(__dirname, '../src/main.js')]
+    app: ['@babel/polyfill', path.resolve(__dirname, '../src/main.ts')]
   },
   output: {
     filename: 'script/[name].[hash:8].js', // 打包后的文件名称
@@ -21,7 +21,6 @@ module.exports = {
     maxAssetSize: 300000, // 整数类型（以字节为单位）
     maxEntrypointSize: 500000, // 整数类型（以字节为单位）
     assetFilter: function(assetFilename) {
-      // 提供资源文件名的断言函数
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
     }
   },
@@ -36,12 +35,16 @@ module.exports = {
         use: ['style-loader', 'css-loader'] // 从右向左解析原则
       },
       {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/]
+        }
+      },
+      {
         test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(jpe?g|png|gif)$/i, //图片文件
@@ -111,7 +114,7 @@ module.exports = {
       '@api': path.resolve(__dirname, '../src/api'),
       '@i18n': path.resolve(__dirname, '../src/i18n')
     },
-    extensions: ['*', '.js', '.json', '.vue']
+    extensions: ['*', '.ts','.js', '.json', '.vue']
   },
   plugins: [
     new HtmlWebpackPlugin({
