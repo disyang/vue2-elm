@@ -131,7 +131,7 @@ module.exports = {
     }),
     require('autoprefixer'),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash:8].css',
+      filename: '[name].[chunkhash].css',
       chunkFilename: '[id].css'
     }),
     new HappyPack({
@@ -143,7 +143,7 @@ module.exports = {
             presets: ['@babel/preset-env']
           }
         },
-        'eslint-loader'
+        // 'eslint-loader'
       ],
       threadPool: HappyThreadPool
     }),

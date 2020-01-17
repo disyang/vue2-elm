@@ -11,7 +11,7 @@ export const router = new VueRouter({
     },
     {
       path: '/login',
-      component: () => import('@components/Hello.vue'),
+      component: () => import('@components/Login.vue'),
       name: '登录'
     },
     {
