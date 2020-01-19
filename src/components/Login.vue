@@ -29,22 +29,6 @@ interface rule {
 
 @Component
 export default class Login extends Vue {
-  checkAge = (rule: any, value: number, callback: any) => {
-    if (!value) {
-      return callback(new Error("年龄不能为空"));
-    }
-    setTimeout(() => {
-      if (!Number.isInteger(value)) {
-        callback(new Error("请输入数字值"));
-      } else {
-        if (value < 18) {
-          callback(new Error("必须年满18岁"));
-        } else {
-          callback();
-        }
-      }
-    }, 1000);
-  };
   validatePass = (rule: any, value: string, callback: any) => {
     if (value === "") {
       callback(new Error("请输入密码"));
@@ -74,7 +58,6 @@ export default class Login extends Vue {
   rules = {
     pass: [{ validator: this.validatePass, trigger: "blur" }],
     checkPass: [{ validator: this.validatePass2, trigger: "blur" }],
-    age: [{ validator: this.checkAge, trigger: "blur" }]
   };
 }
 </script>
