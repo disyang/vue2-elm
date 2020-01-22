@@ -13,11 +13,11 @@ function resolve(p){
 
 module.exports = {
   entry: {
-    app: resolve(__dirname, '../src/main.ts')
+    app: resolve('../src/main.ts')
   },
   output: {
     filename: 'script/[name].[hash:8].js', // 打包后的文件名称
-    path: resolve(__dirname, '../dist') // 打包后的目录
+    path: resolve('../dist') // 打包后的目录
   },
   performance: {
     hints: false, // 枚举
