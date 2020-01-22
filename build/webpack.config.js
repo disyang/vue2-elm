@@ -7,14 +7,17 @@ const vueLoaderPlugin = require('vue-loader/lib/plugin');
 const HappyPack = require('happypack');
 const os = require('os');
 const HappyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+function resolve(p){
+  return path.join(__dirname, p);
+}
 
 module.exports = {
   entry: {
-    app: ['@babel/polyfill', path.resolve(__dirname, '../src/main.ts')]
+    app: resolve(__dirname, '../src/main.ts')
   },
   output: {
     filename: 'script/[name].[hash:8].js', // 打包后的文件名称
-    path: path.resolve(__dirname, '../dist') // 打包后的目录
+    path: resolve(__dirname, '../dist') // 打包后的目录
   },
   performance: {
     hints: false, // 枚举
@@ -110,21 +113,21 @@ module.exports = {
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.runtime.esm.js',
-      '@': path.resolve(__dirname, '../src'),
-      '@assets': path.resolve(__dirname, '../src/assets'),
-      '@components': path.resolve(__dirname, '../src/components'),
-      '@api': path.resolve(__dirname, '../src/api'),
-      '@i18n': path.resolve(__dirname, '../src/i18n')
+      '@': resolve('../src'),
+      '@assets': resolve('../src/assets'),
+      '@components': resolve('../src/components'),
+      '@api': resolve('../src/api'),
+      '@i18n': resolve('../src/i18n')
     },
     extensions: ['*', '.ts', '.js', '.json', '.vue']
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../public/index.html'),
+      template: resolve('../public/index.html'),
       filename: 'index.html',
       inject: true,
       title: 'yht1',
-      favicon: path.resolve(__dirname, '../public/favicon.ico'),
+      favicon: resolve('../public/favicon.ico'),
       minify: {
         collapseWhitespace: true //删除空格、换行
       }
@@ -150,11 +153,11 @@ module.exports = {
     new vueLoaderPlugin(),
     new Webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: require(path.resolve(__dirname, '../dll/app-manifest.json'))
+      manifest: require(resolve('../dll/app-manifest.json'))
     }),
     new CopyWebpackPlugin([
       // 拷贝生成的文件到dist目录 这样每次不必手动去cv
-      { from: path.resolve(__dirname, '../dll'), to: 'dll', ignore: ['*.json'] }
+      { from: resolve('../dll'), to: 'dll', ignore: ['*.json'] }
     ])
   ]
 };
