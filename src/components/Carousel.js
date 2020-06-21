@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { render } from 'react-dom';
 
 class Carousel extends Component {
-  state = { ptr: 0 };
+  state = { ptr: 0, first: true };
   timeout = null; //轮播定时器
   static url = 'http://laichuanfeng.com/demo/carousel/';
   static imgs = [
@@ -36,7 +36,7 @@ class Carousel extends Component {
     const index = Carousel.makeIndex({
       startIndex,
       interval: 1,
-      length: Carousel.imgs.length,
+      length: list.length,
     });
     const interval = list[startIndex].interval * 1000;
     this.setState({ ptr: startIndex });
@@ -44,7 +44,7 @@ class Carousel extends Component {
     if (this.timeout) clearTimeout(this.timeout);
     this.timeout = setTimeout(
       function timer() {
-        const iLen = index()
+        const iLen = index();
         this.setState({ ptr: iLen });
         this.timeout = setTimeout(timer.bind(this), list[iLen].interval * 1000);
       }.bind(this),
@@ -75,12 +75,17 @@ class Carousel extends Component {
   }
 
   componentDidMount() {
+    this.setState({ first: false });
     this.cyclePlay(0, Carousel.imgs);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.ptr !== this.state.ptr;
+  }
+
   render() {
-    const { ptr } = this.state;
-    const list = this.getStep(ptr, Carousel.imgs.length)
+    const { ptr, first } = this.state;
+    const list = this.getStep(ptr, Carousel.imgs.length);
     const stepList = ['left', 'center', 'right'];
     return (
       <div className='content'>
@@ -90,9 +95,10 @@ class Carousel extends Component {
               key={Carousel.imgs[v].id}
               className={stepList[index]}
               style={{
-                background: `url(${Carousel.url}${
-                  Carousel.imgs[v].img
-                })`,
+                background:
+                  index == 0 && first
+                    ? ''
+                    : `url(${Carousel.url}${Carousel.imgs[v].img})`,
               }}
             ></li>
           ))}
